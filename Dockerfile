@@ -5,6 +5,13 @@ RUN apt-get update -y \
 
 RUN ldconfig /usr/local/cuda-12.1/compat/
 
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install --yes --no-install-recommends sudo ca-certificates git wget curl bash libgl1 libx11-6 software-properties-common build-essential -y &&\
+    apt-get autoremove -y && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install Python dependencies
 COPY builder/requirements.txt /requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip \
